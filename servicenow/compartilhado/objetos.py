@@ -5,6 +5,21 @@ from playwright.sync_api import Page
 
 
 @dataclass
+class Pesquisa:
+    pagina: Page
+    entrada_id: str
+    botao_id: str
+    numero: str
+
+    def preenche_entrada(self):
+        print('PREENCHENDO ENTRADA PESQUISA')
+        self.pagina.fill('#' + self.entrada_id, self.numero)
+        time.sleep(5)
+
+        self.pagina.click('#' + self.botao_id)
+
+
+@dataclass
 class Login:
     pagina: Page
     url: str
