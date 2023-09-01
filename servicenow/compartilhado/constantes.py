@@ -3,6 +3,8 @@ INTERFACE_GRAFICA = 'INTERFACE_GRAFICA'
 DIA = 'DIA'
 RENNER = 'RENNER'
 
+EMPRESAS = [DIA, RENNER]
+
 URL_DIA = 'https://portaldiabrasil.service-now.com'
 URL_RENNER = 'https://renner.service-now.com'
 

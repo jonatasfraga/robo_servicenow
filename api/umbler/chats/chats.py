@@ -1,4 +1,4 @@
-from api.umbler.constantes import ORGANIZATION_ID
+from api.umbler.ambiente import ORGANIZATION_ID
 from api.umbler.utils import get
 
 r = get(f'/v1/chats?organizationId={ORGANIZATION_ID}')

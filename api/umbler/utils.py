@@ -1,7 +1,7 @@
 import requests
 import urllib.parse
 
-from api.umbler.constantes import HOST, AUTH
+from api.umbler.ambiente import HOST, AUTH
 
 
 def get(path):

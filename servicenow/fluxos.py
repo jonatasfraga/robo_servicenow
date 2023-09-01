@@ -4,7 +4,7 @@ from servicenow.compartilhado import constantes as c
 from servicenow.compartilhado import ambiente as a
 
 
-def renner():
+def renner(numero):
     pagina, p, browser = m.obtem_pagina()
 
     login = o.Login(pagina, c.URL_RENNER, c.ID_USUARIO_RENNER, c.ID_SENHA_RENNER, a.USUARIO_RENNER, a.SENHA_RENNER)
@@ -13,9 +13,8 @@ def renner():
     pass
 
 
-def dia():
+def dia(numero):
     pagina, p, browser = m.obtem_pagina()
-    numero = m.obtem_numero_da_fila()
 
     login = o.Login(pagina, c.URL_DIA, c.ID_USUARIO_DIA, c.ID_SENHA_DIA, a.USUARIO_DIA, a.SENHA_DIA)
     login.envia_formulario()

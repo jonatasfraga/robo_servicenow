@@ -2,7 +2,7 @@ from datetime import datetime as dt
 from datetime import timedelta as td
 from datetime import timezone as tz
 
-from api.umbler.constantes import CHAT_ID, ORGANIZATION_ID
+from api.umbler.ambiente import CHAT_ID, ORGANIZATION_ID
 from api.umbler.utils import get
 
 ultima_24_horas = (dt.now(tz.utc) - td(hours=24)).strftime('%Y-%m-%dT%H:%M:%S.%f')
