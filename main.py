@@ -1,13 +1,15 @@
-from sites.constantes import DIA, FLUXO, RENNER
-from sites.dia.fluxo import fluxo_dia
-from sites.renner.fluxo import fluxo_renner
+from servicenow.compartilhado import objetos as o
+from servicenow.compartilhado import metodos as m
+from servicenow.compartilhado import constantes as c
+from servicenow.compartilhado import ambiente as a
+from servicenow import fluxos as f
 
 if __name__ == '__main__':
 
-    print('INICIO FLUXO ' + FLUXO)
+    print('INICIO FLUXO ' + a.FLUXO)
 
-    if FLUXO == DIA:
-        fluxo_dia()
+    if a.FLUXO == c.DIA:
+        f.dia()
 
-    if FLUXO == RENNER:
-        fluxo_renner()
+    if a.FLUXO == c.RENNER:
+        f.renner()
