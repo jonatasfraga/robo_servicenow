@@ -1,0 +1,121 @@
+{
+  "/v1/activity-logs/": {
+    "get": {
+      "tags": [
+        "ActivityLogs"
+      ],
+      "summary": "Returns a paginated list of the most recent events in the selected organization. Note that if you have a permission below admin, you can only query your own events.",
+      "parameters": [
+        {
+          "name": "organizationId",
+          "in": "query",
+          "description": "The Id of the organization. A list of all your organizations can be retrieved using the GET /v1/members/me route. A valid id can look like this: YiwUPDF2zFWaRG01",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "example": "AB_12-xyzEXAMPLE"
+          }
+        },
+        {
+          "name": "UTalkUserId",
+          "in": "query",
+          "schema": {
+            "type": "string",
+            "example": "AB_12-xyzEXAMPLE"
+          }
+        },
+        {
+          "name": "StartDateUTC",
+          "in": "query",
+          "schema": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        {
+          "name": "EndDateUTC",
+          "in": "query",
+          "schema": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        {
+          "name": "Skip",
+          "in": "query",
+          "description": "How many items to skip before start taking ones to return",
+          "schema": {
+            "type": "integer",
+            "format": "int32",
+            "default": 0
+          }
+        },
+        {
+          "name": "Take",
+          "in": "query",
+          "description": "The amount of items to get after the specified offset. Can be more than there are items available, but not more than this route's limit of items per page.",
+          "schema": {
+            "type": "integer",
+            "format": "int32",
+            "default": 50
+          }
+        },
+        {
+          "name": "Behavior",
+          "in": "query",
+          "description": "How the query should execute",
+          "schema": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PaginationBehavior"
+              }
+            ],
+            "default": "GetSliceOnly"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "text/plain": {
+              "schema": {
+                "$ref": "#/components/schemas/PaginationOfActivityLogModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PaginationOfActivityLogModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PaginationOfActivityLogModel"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "When an unexpected internal server error occurs",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InternalErrorBasicDetails"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Will return a BadRequest if a property has an invalid value",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ValidationProblemDetails"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,1111 @@
+{
+  "/v1/chats/": {
+    "get": {
+      "tags": [
+        "Chats"
+      ],
+      "summary": "Gets basic info of all chats",
+      "parameters": [
+        {
+          "name": "organizationId",
+          "in": "query",
+          "description": "The Id of the organization. A list of all your organizations can be retrieved using the GET /v1/members/me route. A valid id can look like this: YiwUPDF2zFWaRG01",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "example": "AB_12-xyzEXAMPLE"
+          }
+        },
+        {
+          "name": "Sectors.Rule",
+          "in": "query",
+          "schema": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/FilterRules"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Sectors.Values",
+          "in": "query",
+          "schema": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "AB_12-xyzEXAMPLE"
+            }
+          }
+        },
+        {
+          "name": "PhoneNumbers",
+          "in": "query",
+          "schema": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "name": "Searchtext",
+          "in": "query",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "RelativeStartFromEventUTC",
+          "in": "query",
+          "schema": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        {
+          "name": "RelativeTakeDirection",
+          "in": "query",
+          "schema": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TakeDirection"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Type",
+          "in": "query",
+          "schema": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/FilterTypes"
+              }
+            ]
+          }
+        },
+        {
+          "name": "ChatState",
+          "in": "query",
+          "schema": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ChatState"
+              }
+            ],
+            "default": "Open"
+          }
+        },
+        {
+          "name": "LastMessage",
+          "in": "query",
+          "schema": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/LastMessage"
+              }
+            ],
+            "default": "All"
+          }
+        },
+        {
+          "name": "Order",
+          "in": "query",
+          "schema": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Order"
+              }
+            ],
+            "default": "Desc"
+          }
+        },
+        {
+          "name": "Tags.Rule",
+          "in": "query",
+          "schema": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/FilterRules"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Tags.Values",
+          "in": "query",
+          "schema": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "AB_12-xyzEXAMPLE"
+            }
+          }
+        },
+        {
+          "name": "Members.Rule",
+          "in": "query",
+          "schema": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/FilterRules"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Members.Values",
+          "in": "query",
+          "schema": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "AB_12-xyzEXAMPLE"
+            }
+          }
+        },
+        {
+          "name": "Channels.Rule",
+          "in": "query",
+          "schema": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/FilterRules"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Channels.Values",
+          "in": "query",
+          "schema": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "AB_12-xyzEXAMPLE"
+            }
+          }
+        },
+        {
+          "name": "Skip",
+          "in": "query",
+          "description": "How many items to skip before start taking ones to return",
+          "schema": {
+            "type": "integer",
+            "format": "int32",
+            "default": 0
+          }
+        },
+        {
+          "name": "Take",
+          "in": "query",
+          "description": "The amount of items to get after the specified offset. Can be more than there are items available, but not more than this route's limit of items per page.",
+          "schema": {
+            "type": "integer",
+            "format": "int32",
+            "default": 50
+          }
+        },
+        {
+          "name": "Behavior",
+          "in": "query",
+          "description": "How the query should execute",
+          "schema": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PaginationBehavior"
+              }
+            ],
+            "default": "GetSliceOnly"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "text/plain": {
+              "schema": {
+                "$ref": "#/components/schemas/PaginationOfBasicChatModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PaginationOfBasicChatModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PaginationOfBasicChatModel"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "When an unexpected internal server error occurs",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InternalErrorBasicDetails"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Will return a BadRequest if a property has an invalid value",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ValidationProblemDetails"
+              }
+            }
+          }
+        }
+      }
+    },
+    "post": {
+      "tags": [
+        "Chats"
+      ],
+      "summary": "Creates a new chat for a contact in a channel. If there's already a chat open with this contact and this channel, it will be returned and nothing will be created",
+      "requestBody": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/CreateChatModel"
+                }
+              ]
+            }
+          },
+          "text/json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/CreateChatModel"
+                }
+              ]
+            }
+          },
+          "application/*+json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/CreateChatModel"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "text/plain": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatModel"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "When an unexpected internal server error occurs",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InternalErrorBasicDetails"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Will return a BadRequest if a property has an invalid value",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ValidationProblemDetails"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "/v1/chats/{id}/": {
+    "get": {
+      "tags": [
+        "Chats"
+      ],
+      "summary": "Gets all the details of a single chat",
+      "parameters": [
+        {
+          "name": "organizationId",
+          "in": "query",
+          "description": "The Id of the organization. A list of all your organizations can be retrieved using the GET /v1/members/me route. A valid id can look like this: YiwUPDF2zFWaRG01",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "example": "AB_12-xyzEXAMPLE"
+          }
+        },
+        {
+          "name": "id",
+          "in": "path",
+          "description": "The Id of the chat to get",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "example": "AB_12-xyzEXAMPLE"
+          }
+        },
+        {
+          "name": "includeMessages",
+          "in": "query",
+          "description": "How many messages to include in the LatestMessages array",
+          "schema": {
+            "maximum": 100,
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32",
+            "default": 0
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "text/plain": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatModel"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "When an unexpected internal server error occurs",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InternalErrorBasicDetails"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Will return a BadRequest if a property has an invalid value",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ValidationProblemDetails"
+              }
+            }
+          }
+        }
+      }
+    },
+    "put": {
+      "tags": [
+        "Chats"
+      ],
+      "summary": "Allows updating bunch of options and states of a chat, like closing, marking as private, assigning it to another member and/or sector etc.",
+      "parameters": [
+        {
+          "name": "organizationId",
+          "in": "query",
+          "description": "The Id of the organization. A list of all your organizations can be retrieved using the GET /v1/members/me route. A valid id can look like this: YiwUPDF2zFWaRG01",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "example": "AB_12-xyzEXAMPLE"
+          }
+        },
+        {
+          "name": "id",
+          "in": "path",
+          "description": "The Id of the chat to update",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "example": "AB_12-xyzEXAMPLE"
+          }
+        }
+      ],
+      "requestBody": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/UpdateChatModel"
+                }
+              ]
+            }
+          },
+          "text/json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/UpdateChatModel"
+                }
+              ]
+            }
+          },
+          "application/*+json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/UpdateChatModel"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "text/plain": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatModel"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "An object with the sent identifier could not be found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SerializedErrorResult"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "When an unexpected internal server error occurs",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InternalErrorBasicDetails"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Will return a BadRequest if a property has an invalid value",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ValidationProblemDetails"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "/v1/chats/{chatId}/relative-messages/": {
+    "get": {
+      "tags": [
+        "Chats"
+      ],
+      "summary": "Gets messages from anywhere in a chat based in the desired start date",
+      "parameters": [
+        {
+          "name": "organizationId",
+          "in": "query",
+          "description": "The Id of the organization. A list of all your organizations can be retrieved using the GET /v1/members/me route. A valid id can look like this: YiwUPDF2zFWaRG01",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "example": "AB_12-xyzEXAMPLE"
+          }
+        },
+        {
+          "name": "chatId",
+          "in": "path",
+          "description": "Id of the chat to search the messages in",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "example": "AB_12-xyzEXAMPLE"
+          }
+        },
+        {
+          "name": "FromEventUTC",
+          "in": "query",
+          "description": "Starting point to get the messages",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        {
+          "name": "Take",
+          "in": "query",
+          "description": "How many messages to take after or before the specified date",
+          "required": true,
+          "schema": {
+            "maximum": 250,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32",
+            "default": 50
+          }
+        },
+        {
+          "name": "Direction",
+          "in": "query",
+          "description": "In which direction to get the messages from the start date",
+          "required": true,
+          "schema": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TakeDirection"
+              }
+            ],
+            "default": "TakeBefore"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "text/plain": {
+              "schema": {
+                "$ref": "#/components/schemas/RelativeMessagesResponseModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RelativeMessagesResponseModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RelativeMessagesResponseModel"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "When an unexpected internal server error occurs",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InternalErrorBasicDetails"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Will return a BadRequest if a property has an invalid value",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ValidationProblemDetails"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "/v1/chats/{id}/unread/": {
+    "put": {
+      "tags": [
+        "Chats"
+      ],
+      "summary": "Marks the desired chat as having its last message with an Unread state. Chat must have at least one message for it to work.",
+      "parameters": [
+        {
+          "name": "organizationId",
+          "in": "query",
+          "description": "The Id of the organization. A list of all your organizations can be retrieved using the GET /v1/members/me route. A valid id can look like this: YiwUPDF2zFWaRG01",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "example": "AB_12-xyzEXAMPLE"
+          }
+        },
+        {
+          "name": "id",
+          "in": "path",
+          "description": "The Id of the chat to mark as unread",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "example": "AB_12-xyzEXAMPLE"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "text/plain": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatModel"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "When an unexpected internal server error occurs",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InternalErrorBasicDetails"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Will return a BadRequest if a property has an invalid value",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ValidationProblemDetails"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "/v1/chats/{id}/org-member/": {
+    "put": {
+      "tags": [
+        "Chats"
+      ],
+      "summary": "Modifies the chat's OrganizationMember. If null, remove it.",
+      "parameters": [
+        {
+          "name": "organizationId",
+          "in": "query",
+          "description": "The Id of the organization. A list of all your organizations can be retrieved using the GET /v1/members/me route. A valid id can look like this: YiwUPDF2zFWaRG01",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "example": "AB_12-xyzEXAMPLE"
+          }
+        },
+        {
+          "name": "id",
+          "in": "path",
+          "description": "The Id of the chat to update",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "example": "AB_12-xyzEXAMPLE"
+          }
+        }
+      ],
+      "requestBody": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/ChangeMemberModel"
+                }
+              ]
+            }
+          },
+          "text/json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/ChangeMemberModel"
+                }
+              ]
+            }
+          },
+          "application/*+json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/ChangeMemberModel"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "text/plain": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatModel"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "An object with the sent identifier could not be found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SerializedErrorResult"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "When an unexpected internal server error occurs",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InternalErrorBasicDetails"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Will return a BadRequest if a property has an invalid value",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ValidationProblemDetails"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "/v1/chats/start-bot/": {
+    "post": {
+      "tags": [
+        "Chats"
+      ],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/ChatbotModel"
+                }
+              ]
+            }
+          },
+          "text/json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/ChatbotModel"
+                }
+              ]
+            }
+          },
+          "application/*+json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/ChatbotModel"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "text/plain": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatModel"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "When an unexpected internal server error occurs",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InternalErrorBasicDetails"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Will return a BadRequest if a property has an invalid value",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ValidationProblemDetails"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "/v1/chats/{id}/tags/": {
+    "post": {
+      "tags": [
+        "ChatTags"
+      ],
+      "summary": "Adds a tag to an existing chat. This entire feature supposed to be removed in the near future and replaced only with the contact's tags",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "example": "AB_12-xyzEXAMPLE"
+          }
+        }
+      ],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/AttachTagModel"
+                }
+              ]
+            }
+          },
+          "text/json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/AttachTagModel"
+                }
+              ]
+            }
+          },
+          "application/*+json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/AttachTagModel"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "text/plain": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatModel"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "An object with the sent identifier could not be found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SerializedErrorResult"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "When an unexpected internal server error occurs",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InternalErrorBasicDetails"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Will return a BadRequest if a property has an invalid value",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ValidationProblemDetails"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "/v1/chats/{id}/tags/{tagId}/": {
+    "delete": {
+      "tags": [
+        "ChatTags"
+      ],
+      "summary": "Removes a tag of an existing chat. This entire feature supposed to be removed in the near future and replaced only with the contact's tags",
+      "parameters": [
+        {
+          "name": "organizationId",
+          "in": "query",
+          "description": "The Id of the organization. A list of all your organizations can be retrieved using the GET /v1/members/me route. A valid id can look like this: YiwUPDF2zFWaRG01",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "example": "AB_12-xyzEXAMPLE"
+          }
+        },
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "example": "AB_12-xyzEXAMPLE"
+          }
+        },
+        {
+          "name": "tagId",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "example": "AB_12-xyzEXAMPLE"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "text/plain": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatModel"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "An object with the sent identifier could not be found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SerializedErrorResult"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "When an unexpected internal server error occurs",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InternalErrorBasicDetails"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Will return a BadRequest if a property has an invalid value",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ValidationProblemDetails"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

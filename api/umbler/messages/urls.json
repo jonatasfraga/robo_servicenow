@@ -1,0 +1,732 @@
+{
+  "/v1/messages/{id}/": {
+    "get": {
+      "tags": [
+        "Messages"
+      ],
+      "summary": "Gets all the information about a single message",
+      "parameters": [
+        {
+          "name": "organizationId",
+          "in": "query",
+          "description": "The Id of the organization. A list of all your organizations can be retrieved using the GET /v1/members/me route. A valid id can look like this: YiwUPDF2zFWaRG01",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "example": "AB_12-xyzEXAMPLE"
+          }
+        },
+        {
+          "name": "id",
+          "in": "path",
+          "description": "The Id of the message",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "example": "AB_12-xyzEXAMPLE"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "text/plain": {
+              "schema": {
+                "$ref": "#/components/schemas/MessageModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MessageModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MessageModel"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "When an unexpected internal server error occurs",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InternalErrorBasicDetails"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Will return a BadRequest if a property has an invalid value",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ValidationProblemDetails"
+              }
+            }
+          }
+        }
+      }
+    },
+    "delete": {
+      "tags": [
+        "Messages"
+      ],
+      "summary": "Attempts to delete a message. Depending on the type of channel and the desired \"deleteForEveryone\" behavior, these things might happen:\r\n1. The message needs to be deleted only in out database and is deleted immediately within this action. (Business channel, delete for me).\r\n2. The message cannot be deleted because the remote locations where the message should also be deleted no longer accept to be deleted because of time restraints (Starter channel, delete for everyone).\r\n3. The remote location where the message should also be deleted does not allow messages to deleted at all (Business channel, delete for everyone).\r\n4. The message can be deleted in the remote location, but the only thing the action does is request it. Deletion from our database only happens when we receive a confirmation that the message was actually deleted (Starter channel, delete for me or everyone).",
+      "parameters": [
+        {
+          "name": "organizationId",
+          "in": "query",
+          "description": "The Id of the organization. A list of all your organizations can be retrieved using the GET /v1/members/me route. A valid id can look like this: YiwUPDF2zFWaRG01",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "example": "AB_12-xyzEXAMPLE"
+          }
+        },
+        {
+          "name": "id",
+          "in": "path",
+          "description": "The message to delete",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "example": "AB_12-xyzEXAMPLE"
+          }
+        },
+        {
+          "name": "deleteForEveryone",
+          "in": "query",
+          "description": "Attempts to delete for everyone in the chat if true. Attempts to delete just for ourselves when false.",
+          "required": true,
+          "schema": {
+            "type": "boolean"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "text/plain": {
+              "schema": {
+                "$ref": "#/components/schemas/MessageModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MessageModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MessageModel"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "An object with the sent identifier could not be found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SerializedErrorResult"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "When an unexpected internal server error occurs",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InternalErrorBasicDetails"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Will return a BadRequest if a property has an invalid value",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ValidationProblemDetails"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "/v1/messages/{id}/states/": {
+    "get": {
+      "tags": [
+        "Messages"
+      ],
+      "summary": "Gets a list of all the states a message had at every point in time",
+      "parameters": [
+        {
+          "name": "organizationId",
+          "in": "query",
+          "description": "The Id of the organization. A list of all your organizations can be retrieved using the GET /v1/members/me route. A valid id can look like this: YiwUPDF2zFWaRG01",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "example": "AB_12-xyzEXAMPLE"
+          }
+        },
+        {
+          "name": "id",
+          "in": "path",
+          "description": "The Id of the message",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "example": "AB_12-xyzEXAMPLE"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "text/plain": {
+              "schema": {
+                "$ref": "#/components/schemas/MessageStatesModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MessageStatesModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MessageStatesModel"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "When an unexpected internal server error occurs",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InternalErrorBasicDetails"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Will return a BadRequest if a property has an invalid value",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ValidationProblemDetails"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "/v1/messages/": {
+    "post": {
+      "tags": [
+        "Messages"
+      ],
+      "summary": "Post a message to a chat",
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CreateMessageModel"
+            }
+          },
+          "application/*+json": {
+            "schema": {
+              "$ref": "#/components/schemas/CreateMessageModel"
+            }
+          },
+          "multipart/form-data": {
+            "schema": {
+              "required": [
+                "ChatId",
+                "OrganizationId"
+              ],
+              "type": "object",
+              "properties": {
+                "TempId": {
+                  "type": "string",
+                  "description": "An Id generated by the client that is passed along when the message is comitted to the database and has the true id. Not necessary for fire-and-forget situations",
+                  "default": null
+                },
+                "File": {
+                  "type": "string",
+                  "format": "binary",
+                  "default": null
+                },
+                "Prefix": {
+                  "type": "string",
+                  "description": "A prefix to be concatenated with the message. Used by the app to include the operator name. Not required",
+                  "default": null
+                },
+                "Message": {
+                  "maxLength": 2000,
+                  "type": "string",
+                  "description": "The message to send",
+                  "default": "Ol�!"
+                },
+                "ChatId": {
+                  "type": "string",
+                  "description": "The Id of the chat to send the message to. Must exist and be open",
+                  "example": "AB_12-xyzEXAMPLE"
+                },
+                "IsPrivate": {
+                  "type": "boolean",
+                  "description": "Private messages are not sent to the contact, they function like an internal annotation",
+                  "default": false
+                },
+                "PreviousMessageId": {
+                  "type": "string",
+                  "description": "Used by the app to ensure messages are sent in order. Not necessary",
+                  "example": "AB_12-xyzEXAMPLE"
+                },
+                "StickUrl": {
+                  "type": "string",
+                  "description": "If the message you're sendind is a sticker, here you put its URL",
+                  "format": "uri",
+                  "example": "https://example.com"
+                },
+                "ReplyToMessageId": {
+                  "type": "string",
+                  "description": "When the message you're sending is a reply to another message, use the other message's Id here",
+                  "example": "AB_12-xyzEXAMPLE"
+                },
+                "SkipReassign": {
+                  "type": "boolean",
+                  "description": "When true, will skip the step of reassigning the conversation to the user who sent the message",
+                  "default": false
+                },
+                "OrganizationId": {
+                  "type": "string",
+                  "example": "AB_12-xyzEXAMPLE"
+                }
+              }
+            },
+            "encoding": {
+              "TempId": {
+                "style": "form"
+              },
+              "File": {
+                "style": "form"
+              },
+              "Prefix": {
+                "style": "form"
+              },
+              "Message": {
+                "style": "form"
+              },
+              "ChatId": {
+                "style": "form"
+              },
+              "IsPrivate": {
+                "style": "form"
+              },
+              "PreviousMessageId": {
+                "style": "form"
+              },
+              "StickUrl": {
+                "style": "form"
+              },
+              "ReplyToMessageId": {
+                "style": "form"
+              },
+              "SkipReassign": {
+                "style": "form"
+              },
+              "OrganizationId": {
+                "style": "form"
+              }
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "text/plain": {
+              "schema": {
+                "$ref": "#/components/schemas/MessageModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MessageModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MessageModel"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "An object with the sent identifier could not be found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SerializedErrorResult"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "When an unexpected internal server error occurs",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InternalErrorBasicDetails"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Will return a BadRequest if a property has an invalid value",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ValidationProblemDetails"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "/v1/messages/{id}/forward/": {
+    "post": {
+      "tags": [
+        "Messages"
+      ],
+      "summary": "Forwards a message into another chat",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "The Id of the message to be forwarded",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "example": "AB_12-xyzEXAMPLE"
+          }
+        }
+      ],
+      "requestBody": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/ForwardMessageModel"
+                }
+              ]
+            }
+          },
+          "text/json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/ForwardMessageModel"
+                }
+              ]
+            }
+          },
+          "application/*+json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/ForwardMessageModel"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "text/plain": {
+              "schema": {
+                "$ref": "#/components/schemas/MessageModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MessageModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MessageModel"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "An object with the sent identifier could not be found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SerializedErrorResult"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "When an unexpected internal server error occurs",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InternalErrorBasicDetails"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Will return a BadRequest if a property has an invalid value",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ValidationProblemDetails"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "/v1/messages/simplified/": {
+    "post": {
+      "tags": [
+        "Messages"
+      ],
+      "summary": "Simplified version of the regular POST action. Does not require to create the contact and open the chat beforehand. But it is not only simplified, it's also somewhat more limited. If you require a functionality this action does not provide, the main action must be used instead.",
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CreateMessageSimplifiedModel"
+            }
+          },
+          "application/*+json": {
+            "schema": {
+              "$ref": "#/components/schemas/CreateMessageSimplifiedModel"
+            }
+          },
+          "multipart/form-data": {
+            "schema": {
+              "required": [
+                "FromPhone",
+                "OrganizationId",
+                "ToPhone"
+              ],
+              "type": "object",
+              "properties": {
+                "ToPhone": {
+                  "pattern": "^\\+[1-9]\\d{1,14}$",
+                  "type": "string",
+                  "description": "A phone number in the E.164 standard",
+                  "example": "+5511987654321"
+                },
+                "FromPhone": {
+                  "pattern": "^\\+[1-9]\\d{1,14}$",
+                  "type": "string",
+                  "description": "A phone number in the E.164 standard",
+                  "example": "+5511987654321"
+                },
+                "OrganizationId": {
+                  "type": "string",
+                  "example": "AB_12-xyzEXAMPLE"
+                },
+                "Message": {
+                  "maxLength": 2000,
+                  "type": "string",
+                  "default": "Ol�!"
+                },
+                "File": {
+                  "type": "string",
+                  "format": "binary",
+                  "default": null
+                },
+                "SkipReassign": {
+                  "type": "boolean",
+                  "description": "When true, will skip the step of reassigning the conversation to the user who sent the message",
+                  "default": false
+                }
+              }
+            },
+            "encoding": {
+              "ToPhone": {
+                "style": "form"
+              },
+              "FromPhone": {
+                "style": "form"
+              },
+              "OrganizationId": {
+                "style": "form"
+              },
+              "Message": {
+                "style": "form"
+              },
+              "File": {
+                "style": "form"
+              },
+              "SkipReassign": {
+                "style": "form"
+              }
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "text/plain": {
+              "schema": {
+                "$ref": "#/components/schemas/MessageModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MessageModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MessageModel"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "An object with the sent identifier could not be found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SerializedErrorResult"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "When an unexpected internal server error occurs",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InternalErrorBasicDetails"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Will return a BadRequest if a property has an invalid value",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ValidationProblemDetails"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "/v1/messages/{id}/resend/": {
+    "put": {
+      "tags": [
+        "Messages"
+      ],
+      "parameters": [
+        {
+          "name": "organizationId",
+          "in": "query",
+          "description": "The Id of the organization. A list of all your organizations can be retrieved using the GET /v1/members/me route. A valid id can look like this: YiwUPDF2zFWaRG01",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "example": "AB_12-xyzEXAMPLE"
+          }
+        },
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "example": "AB_12-xyzEXAMPLE"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "text/plain": {
+              "schema": {
+                "$ref": "#/components/schemas/MessageModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MessageModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MessageModel"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "An object with the sent identifier could not be found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SerializedErrorResult"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "When an unexpected internal server error occurs",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InternalErrorBasicDetails"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Will return a BadRequest if a property has an invalid value",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ValidationProblemDetails"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

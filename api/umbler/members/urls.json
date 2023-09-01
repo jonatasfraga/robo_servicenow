@@ -1,0 +1,403 @@
+{
+  "members": {
+    "/v1/members/me/": {
+      "get": {
+        "tags": [
+          "Members"
+        ],
+        "summary": "This action returns all the information about you, the logged in user. It also includes the list of organizations you're a part of.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationMemberModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationMemberModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationMemberModel"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "When an unexpected internal server error occurs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorBasicDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Will return a BadRequest if a property has an invalid value",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Members"
+        ],
+        "summary": "Updates information about yourself.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/UpdateOrganizationMemberModel"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/UpdateOrganizationMemberModel"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/UpdateOrganizationMemberModel"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationMemberModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationMemberModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationMemberModel"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "When an unexpected internal server error occurs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorBasicDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Will return a BadRequest if a property has an invalid value",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/members/me/profilepicture/": {
+      "put": {
+        "tags": [
+          "Members"
+        ],
+        "summary": "Allows to update your own profile picture",
+        "parameters": [
+          {
+            "name": "organizationId",
+            "in": "query",
+            "description": "The Id of the organization. A list of all your organizations can be retrieved using the GET /v1/members/me route. A valid id can look like this: YiwUPDF2zFWaRG01",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "AB_12-xyzEXAMPLE"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "image"
+                ],
+                "type": "object",
+                "properties": {
+                  "image": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "image": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "format": "uri",
+                  "example": "https://example.com"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "uri",
+                  "example": "https://example.com"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "uri",
+                  "example": "https://example.com"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "When an unexpected internal server error occurs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorBasicDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Will return a BadRequest if a property has an invalid value",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/members/me/status-activity/": {
+      "put": {
+        "tags": [
+          "Members"
+        ],
+        "summary": "Allows to update you current status",
+        "parameters": [
+          {
+            "name": "organizationId",
+            "in": "query",
+            "description": "The Id of the organization. A list of all your organizations can be retrieved using the GET /v1/members/me route. A valid id can look like this: YiwUPDF2zFWaRG01",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "AB_12-xyzEXAMPLE"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "The new status",
+            "required": true,
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/StatusActivity"
+                }
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationMemberStatusModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationMemberStatusModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationMemberStatusModel"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "When an unexpected internal server error occurs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorBasicDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Will return a BadRequest if a property has an invalid value",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/members/{id}/activation-status/": {
+      "put": {
+        "tags": [
+          "Members"
+        ],
+        "summary": "Allows to update the activation status (active, disabled) of a user in an organization.\r\nIf you're an Admin in the selected organization, you can enable or disable any user in that organization.\r\nIf your permission is below Admin, you're only allowed to disable yourself.\r\nWhen deactivating someone, it is possible to choose whether or not to close all conversations with this attendant.",
+        "parameters": [
+          {
+            "name": "organizationId",
+            "in": "query",
+            "description": "The Id of the organization. A list of all your organizations can be retrieved using the GET /v1/members/me route. A valid id can look like this: YiwUPDF2zFWaRG01",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "AB_12-xyzEXAMPLE"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The Id of the user to update the activation status",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "AB_12-xyzEXAMPLE"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/UpdateOrganizationMemberStatusModel"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/UpdateOrganizationMemberStatusModel"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/UpdateOrganizationMemberStatusModel"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationMemberActivationStatusModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationMemberActivationStatusModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationMemberActivationStatusModel"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "When an unexpected internal server error occurs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorBasicDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Will return a BadRequest if a property has an invalid value",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -2,7 +2,7 @@ import os
 
 from playwright.sync_api import sync_playwright
 
-from sites.constantes import INTERFACE_GRAFICA
+from servicenow.compartilhado.constantes import INTERFACE_GRAFICA
 
 
 def obtem_pagina():
@@ -18,3 +18,7 @@ def obtem_pagina():
 def fecha_pagina(api, browser):
     browser.close()
     api.stop()
+
+
+def obtem_numero_da_fila():
+    return None
