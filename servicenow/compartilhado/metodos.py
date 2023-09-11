@@ -2,7 +2,7 @@ import os
 
 from playwright.sync_api import sync_playwright
 
-from servicenow.compartilhado.constantes import INTERFACE_GRAFICA
+from compartilhado.constantes import INTERFACE_GRAFICA
 
 
 def obtem_pagina():

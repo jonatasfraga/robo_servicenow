@@ -1,6 +1,6 @@
-from servicenow.compartilhado import objetos as o, constantes as c
+from servicenow.compartilhado import objetos as o
+from compartilhado import constantes as c, ambiente as a
 from servicenow.compartilhado import metodos as m
-import ambiente as a
 
 
 def renner(numero):

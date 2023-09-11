@@ -1,5 +1,5 @@
 from api.umbler.procura_pedido_status import obtem_pedido_status
-from servicenow.compartilhado import constantes as c
+from compartilhado import constantes as c
 from servicenow import fluxos as f
 from time import sleep
 
