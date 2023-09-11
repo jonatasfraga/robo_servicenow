@@ -9,7 +9,7 @@ from api.umbler.resposta_erro import resposta_erro
 from api.umbler.utils import get
 from servicenow.compartilhado.constantes import EMPRESAS
 
-ultima_24_horas = (dt.now(tz.utc) - td(hours=5)).strftime('%Y-%m-%dT%H:%M:%S.%f')
+ultima_24_horas = (dt.now(tz.utc) - td(hours=10)).strftime('%Y-%m-%dT%H:%M:%S.%f')
 
 
 def obtem_pedido_status():
