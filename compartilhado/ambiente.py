@@ -1,6 +1,8 @@
 from os import environ as env
 
-FLUXO = env['FLUXO']
+
+AUTH = env['AUTH_UMBLER']
+ORGANIZATION_ID = env['ORGANIZATION_ID']
 
 USUARIO_DIA = env['USUARIO_DIA']
 USUARIO_RENNER = env['USUARIO_RENNER']
