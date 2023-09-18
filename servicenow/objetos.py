@@ -3,14 +3,15 @@ from dataclasses import dataclass
 
 from playwright.sync_api import Page
 
+
 @dataclass
-class Pesquisa:
+class Chamado:
     pagina: Page
     entrada_id: str
     botao_id: str
     numero: str
 
-    def envia_formulario(self):
+    def pesquisa(self):
         print('PREENCHENDO ENTRADA PESQUISA')
         self.pagina.locator('#' + self.entrada_id).click()
         time.sleep(5)
@@ -18,7 +19,7 @@ class Pesquisa:
         time.sleep(5)
         self.pagina.click('#' + self.botao_id)
 
-    def clica_item(self):
+    def clica(self):
         time.sleep(5)
         self.pagina.click('li[data-testclass=sn-global-search-record]')
 
@@ -26,10 +27,9 @@ class Pesquisa:
         time.sleep(5)
         import base64
         self.pagina.set_viewport_size({"height": 4000, "width": 500})
-        screenshot_bytes = self.pagina.frame_locator('#gsft_main').locator("div[data-position-below-header='true']").screenshot()
+        screenshot_bytes = self.pagina.frame_locator('#gsft_main').locator(
+            "div[data-position-below-header='true']").screenshot()
         return base64.b64encode(screenshot_bytes).decode()
-
-
 
 
 @dataclass
