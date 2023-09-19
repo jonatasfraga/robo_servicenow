@@ -3,7 +3,7 @@ from servicenow import objetos as o, metodos as m
 
 
 def renner(numero):
-    pagina, p, browser = m.obtem_pagina()
+    pagina, api, browser = m.obtem_pagina()
 
     login = o.Login(pagina, c.URL_RENNER, c.ID_USUARIO_RENNER, c.ID_SENHA_RENNER, a.USUARIO_RENNER, a.SENHA_RENNER)
     login.envia_formulario()
@@ -13,11 +13,13 @@ def renner(numero):
     chamado.clica()
     imagem = chamado.captura()
 
+    m.fecha_pagina(api, browser)
+
     return imagem
 
 
 def dia(numero):
-    pagina, p, browser = m.obtem_pagina()
+    pagina, api, browser = m.obtem_pagina()
 
     login = o.Login(pagina, c.URL_DIA, c.ID_USUARIO_DIA, c.ID_SENHA_DIA, a.USUARIO_DIA, a.SENHA_DIA)
     login.envia_formulario()
@@ -26,5 +28,7 @@ def dia(numero):
     chamado.pesquisa()
     chamado.clica()
     imagem = chamado.captura()
+
+    m.fecha_pagina(api, browser)
 
     return imagem
