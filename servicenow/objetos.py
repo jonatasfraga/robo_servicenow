@@ -23,10 +23,14 @@ class Chamado:
         time.sleep(5)
         self.pagina.click('li[data-testclass=sn-global-search-record]')
 
+        with self.pagina.expect_response("**sys_id**") as response_info:
+            pass
+
     def captura(self):
         time.sleep(5)
         import base64
-        self.pagina.set_viewport_size({"height": 4000, "width": 500})
+        self.pagina.set_viewport_size({"height": 8000, "width": 500})
+        time.sleep(5)
         screenshot_bytes = self.pagina.frame_locator('#gsft_main').locator(
             "div[data-position-below-header='true']").screenshot()
         return base64.b64encode(screenshot_bytes).decode()
@@ -42,7 +46,7 @@ class Login:
     senha: str
 
     def envia_formulario(self):
-        print('ENVIANDO FORMULÁRIO LOGIN')
+        print('ENVIANDO FORMULARIO LOGIN')
         self.pagina.goto(self.url)
         time.sleep(5)
         self.pagina.fill('#' + self.usuario_id, self.usuario)
