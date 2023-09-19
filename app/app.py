@@ -1,4 +1,5 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
+
 from compartilhado import ambiente as a
 from compartilhado.constantes import ID_EMPRESAS_DICIONARIO
 
@@ -16,4 +17,9 @@ def webhook():
 
     print(empresa, numero_chamado)
 
-    return 'Hello, World!'
+    retorno = {
+        "Data": {
+            "status": "pesquisando"
+        }
+    }
+    return jsonify(retorno)
