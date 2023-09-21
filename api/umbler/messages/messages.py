@@ -1,16 +1,12 @@
-import requests
+from api.umbler.utils import post
 
-url = "https://app-utalk.umbler.com/api/v1/messages/"
 
-payload = {'Message': 'teste',
-           'OrganizationId': 'ZNZiWiFuNRc6abTT',
-           'ChatId': 'ZNZovyd0XXjqBUEt'}
+def envia_mensagem(mensagem, organizacao_id, chat_id):
+    dados = {'Message': mensagem,
+             'OrganizationId': organizacao_id,
+             'ChatId': chat_id}
+    caminho = '/api/messages'
 
-headers = {
-    'Authorization': 'Bearer E1FF0A94FF1FE462763EEB5D1C7E1001534175B928F4F0CEEB9AECFAB48DE6C6',
-    # 'Content-Type': 'multipart/form-data'
-}
+    response = post(dados, caminho)
 
-response = requests.request("POST", url, headers=headers, json=payload)
-
-print(response.text)
+    print(response.text)
