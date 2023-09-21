@@ -8,7 +8,7 @@ EMPRESAS = [DIA, RENNER]
 URL_DIA = 'https://portaldiabrasil.service-now.com'
 URL_RENNER = 'https://renner.service-now.com'
 
-HOST_UMBLER = 'https://app-utalk.umbler.com/api'
+HOST_UMBLER = 'https://app-utalk.umbler.com'
 
 ID_USUARIO_DIA = 'user_name'
 ID_USUARIO_RENNER = 'username'
