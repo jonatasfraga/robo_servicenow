@@ -1,16 +1,16 @@
 import requests
-import urllib.parse
 
-from api.umbler.ambiente import HOST, AUTH
+from compartilhado.ambiente import AUTH
+from compartilhado.constantes import HOST_UMBLER
 
 
 def get(path):
-    url = HOST + path
+    url = HOST_UMBLER + path
     headers = {'Authorization': AUTH, 'Content-Type': 'application/json'}
     return requests.get(url, headers=headers)
 
 
 def post(path, body):
-    url = HOST + path
+    url = HOST_UMBLER + path
     headers = {'Authorization': AUTH, 'Content-Type': 'application/json'}
-    return requests.post(url, headers=headers)
+    return requests.post(url, headers=headers, json=body)
